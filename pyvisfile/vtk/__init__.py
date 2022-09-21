@@ -396,8 +396,9 @@ class DataArray:
 
             assert len(container.shape) == 2, \
                     "numpy vectors of rank >2 are not supported"
-            assert container.strides[1] == container.itemsize, \
-                    "2D numpy arrays must be row-major"
+            assert (
+                container.strides[1] == container.itemsize
+                or container.size == 0), "2D numpy arrays must be row-major"
 
             if vector_padding > container.shape[1]:
                 container = np.asarray(np.hstack((
